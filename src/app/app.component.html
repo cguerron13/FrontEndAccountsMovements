@@ -1,0 +1,149 @@
+<!-- <div>
+
+  <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+
+    <div class="text-4xl font-extrabold tracking-tight">Cashback del Cliente</div>
+    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+        <mat-form-field class="fuse-mat-dense min-w-64" [subscriptSizing]="'dynamic'">
+            <mat-icon
+                class="icon-size-5"
+                matPrefix
+                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+            <input
+                id="ruc"
+                matInput
+                maxlength="13"
+                (keyup)="applyFilter($event)"
+                (keydown.Tab)="applyFilter($event)"
+                [formControl]="searchInputControl"
+                [autocomplete]="'off'"
+                [placeholder]="'Ingrese Cedula o RUC'">
+
+        </mat-form-field>
+        <button
+            class="ml-4 btn btn-danger"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="buscarPorCedula()">
+            <span class="ml-2 mr-1">Buscar</span>
+        </button>
+    </div>
+</div>
+
+
+
+
+</div>
+
+<router-outlet /> -->
+
+
+
+
+
+<div class="container">
+
+
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <h1>Account Movements Web</h1>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <div style="width: 600px;">
+    <mat-form-field [subscriptSizing]="'dynamic'"
+    style="width: 300px;">
+
+        <input
+            id="ruc"
+            matInput
+            maxlength="10"
+            (keyup)="applyFilter($event)"
+            (keydown.Tab)="applyFilter($event)"
+            [formControl]="searchInputControl"
+            [autocomplete]="'off'"
+            [placeholder]="'Ingrese Identificación'">
+
+    </mat-form-field>
+    <button
+        class="ml-4"
+        style="margin-left: 20px "
+        mat-flat-button
+        [color]="'primary'"
+        (click)="buscarPorCedula()">
+        <span class="ml-2 mr-1">Buscar</span>
+    </button>
+</div>
+
+<br/>
+
+
+<div class="example-container" *ngIf="personaRespuesta && activarBtn">
+  <p><b>Nombre:</b> {{personaRespuesta? personaRespuesta.nombre : ""}}</p>
+
+  <p><b>Apellido:</b> {{personaRespuesta ? personaRespuesta.apellido : ""}}</p>
+
+  <p><b>edad:</b> {{personaRespuesta.edad}}</p>
+
+  <p><b>identificación:</b> {{personaRespuesta.identificacion}}</p>
+
+  <p><b>Cargo:</b> {{personaRespuesta.cargo}}</p>
+
+  <p><b>Numero de Cuenta:</b> {{personaRespuesta.cuentas[0].numeroCuenta}}</p>
+
+  <p><b>Fecha:</b> {{personaRespuesta.cuentas[0].fechaCreacion}}</p>
+
+  <p><b>saldo Actual:</b> {{personaRespuesta.cuentas[0].saldoActual}}</p>
+
+
+  <br/>
+
+
+
+
+
+
+
+  <table mat-table [dataSource]="personaRespuesta.cuentas[0].cuentaMovimientos" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="tipo">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="detalle">
+      <th mat-header-cell *matHeaderCellDef> Detalle </th>
+      <td mat-cell *matCellDef="let element"> {{element.detalle}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="valor">
+      <th mat-header-cell *matHeaderCellDef> Valor </th>
+      <td mat-cell *matCellDef="let element"> {{element.valor}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
+
+
+<div class="example-container" *ngIf="!activarBtn && clickBtn">
+
+  <div class="alert alert-danger" role="alert">
+    Debe ingresar una identificación de 9 dígitos
+  </div>
+
+</div>
+
